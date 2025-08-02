@@ -4,7 +4,68 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Ajanta QR Info System</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+  <style>
+    body {
+      background: linear-gradient(135deg, #fdf6e3 0%, #ffe9c6 100%);
+    }
+    header {
+      background: linear-gradient(90deg, #b7791f 0%, #f6ad55 100%);
+      box-shadow: 0 4px 16px rgba(183, 121, 31, 0.15);
+    }
+    section.bg-yellow-50 {
+      background: linear-gradient(90deg, #fffbea 0%, #fefcbf 100%);
+      border-bottom: 2px solid #f6ad55;
+    }
+    #reader {
+      border: 2px dashed #b7791f;
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(183, 121, 31, 0.08);
+      padding: 1.5rem;
+      border-radius: 1rem;
+    }
+    #cave-info {
+      background: #fff8e1;
+      border-radius: 1rem;
+      box-shadow: 0 2px 12px rgba(246, 173, 85, 0.12);
+      padding: 2rem 1rem;
+      margin-top: 2rem;
+      transition: box-shadow 0.3s;
+    }
+    #cave-info:hover {
+      box-shadow: 0 4px 24px rgba(246, 173, 85, 0.18);
+    }
+    #cave-title {
+      color: #b7791f;
+      letter-spacing: 1px;
+    }
+    #cave-desc {
+      color: #4a3f1c;
+      font-size: 1.08rem;
+    }
+    #not-found {
+      background: #fff0f0;
+      border-radius: 0.5rem;
+      padding: 1rem;
+      border: 1px solid #f56565;
+      box-shadow: 0 2px 8px rgba(245, 101, 101, 0.08);
+    }
+    footer {
+      background: linear-gradient(90deg, #b7791f 0%, #f6ad55 100%);
+      box-shadow: 0 -2px 12px rgba(183, 121, 31, 0.10);
+    }
+    @media (max-width: 640px) {
+      #reader, #cave-info {
+        padding: 1rem;
+      }
+      header h1 {
+        font-size: 2rem;
+      }
+      section h2 {
+        font-size: 1.3rem;
+      }
+    }
+  </style>
   <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 </head>
 
@@ -44,46 +105,45 @@
   <!-- JavaScript -->
   <script>
     // Sample cave data (can be replaced with Firebase or API calls)
-    const caveData = {
-      cave1: {
-        title: "Cave 1 - Ajanta",
-        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Ajanta_Cave_1_%28cropped%29.jpg/640px-Ajanta_Cave_1_%28cropped%29.jpg",
-        description: "Cave 1 is a richly decorated Vihara (monastery) featuring intricate paintings and sculptures from the Gupta period. It includes the famous Bodhisattva Padmapani fresco."
-      },
-      cave2: {
-        title: "Cave 2 - Ajanta",
-        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Ajanta_Cave_2%2C_front_view.jpg/640px-Ajanta_Cave_2%2C_front_view.jpg",
-        description: "Cave 2 is another monastery, noted for its well-preserved wall paintings including depictions of Jataka tales, beautifully painted ceilings, and ornate doorways."
-      }
-      // Add more caves as needed
-    };
+  function onScanSuccess(decodedText, decodedResult) {
+  const allowedPages = [
+    "https://diga1710.github.io/AjantaInfoWebPage/CaveInfo/cave1.html",
+    "https://diga1710.github.io/AjantaInfoWebPage/CaveInfo/cave2.html",
+    "https://diga1710.github.io/AjantaInfoWebPage/CaveInfo/cave3.html",
+    "https://diga1710.github.io/AjantaInfoWebPage/CaveInfo/cave4.html",
+    "https://diga1710.github.io/AjantaInfoWebPage/CaveInfo/cave5.html",
+    "https://diga1710.github.io/AjantaInfoWebPage/CaveInfo/cave6.html",
+    "https://diga1710.github.io/AjantaInfoWebPage/CaveInfo/cave7.html",
+    "https://diga1710.github.io/AjantaInfoWebPage/CaveInfo/cave8.html",
+    "https://diga1710.github.io/AjantaInfoWebPage/CaveInfo/cave9.html",
+    "https://diga1710.github.io/AjantaInfoWebPage/CaveInfo/cave10.html",
+    "https://diga1710.github.io/AjantaInfoWebPage/CaveInfo/cave11.html",
+    "https://diga1710.github.io/AjantaInfoWebPage/CaveInfo/cave12.html",
+    "https://diga1710.github.io/AjantaInfoWebPage/CaveInfo/cave13.html",
+    "https://diga1710.github.io/AjantaInfoWebPage/CaveInfo/cave14.html",
+    "https://diga1710.github.io/AjantaInfoWebPage/CaveInfo/cave15.html",
+    "https://diga1710.github.io/AjantaInfoWebPage/CaveInfo/cave16.html",
+    "https://diga1710.github.io/AjantaInfoWebPage/CaveInfo/cave17.html",
+    "https://diga1710.github.io/AjantaInfoWebPage/CaveInfo/cave18.html",
+    "https://diga1710.github.io/AjantaInfoWebPage/CaveInfo/cave19.html",
+    "https://diga1710.github.io/AjantaInfoWebPage/CaveInfo/cave20.html",
+    "https://diga1710.github.io/AjantaInfoWebPage/CaveInfo/cave21.html",
+    "https://diga1710.github.io/AjantaInfoWebPage/CaveInfo/cave22.html",
+    "https://diga1710.github.io/AjantaInfoWebPage/CaveInfo/cave23.html",
+    "https://diga1710.github.io/AjantaInfoWebPage/CaveInfo/cave24.html",
+    "https://diga1710.github.io/AjantaInfoWebPage/CaveInfo/cave25.html",
+    "https://diga1710.github.io/AjantaInfoWebPage/CaveInfo/cave26.html",
+    "https://diga1710.github.io/AjantaInfoWebPage/CaveInfo/cave27.html",
+    "https://diga1710.github.io/AjantaInfoWebPage/CaveInfo/cave28.html",
+    "https://diga1710.github.io/AjantaInfoWebPage/CaveInfo/cave29.html",
+    "https://diga1710.github.io/AjantaInfoWebPage/CaveInfo/cave30.html",
+  ];
 
-    function showCaveInfo(code) {
-      const id = code.trim().toLowerCase().replace(/.*cave/, "cave");
-      const info = caveData[id];
-
-      const infoDiv = document.getElementById("cave-info");
-      const notFoundDiv = document.getElementById("not-found");
-
-      if (info) {
-        document.getElementById("cave-title").innerText = info.title;
-        document.getElementById("cave-img").src = info.img;
-        document.getElementById("cave-desc").innerText = info.description;
-
-        infoDiv.classList.remove("hidden");
-        notFoundDiv.classList.add("hidden");
-      } else {
-        infoDiv.classList.add("hidden");
-        notFoundDiv.classList.remove("hidden");
-      }
-    }
-
-    function onScanSuccess(decodedText, decodedResult) {
-  console.log("Scanned URL:", decodedText);
-  if (decodedText.startsWith("http://") || decodedText.startsWith("https://")) {
+  if (allowedPages.includes(decodedText)) {
+    // Allow only known links
     window.location.href = decodedText;
   } else {
-    alert("Scanned content is not a valid URL:\n" + decodedText);
+    alert("Invalid QR code. Access denied.");
   }
 }
 
