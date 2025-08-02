@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ajanta QR Info System</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+</head>
+
+<body class="bg-gray-100 text-gray-800 font-sans">
+
+  <!-- Header -->
+  <header class="bg-yellow-800 text-white py-5 text-center">
+    <h1 class="text-3xl font-bold">QR Based Global Information System</h1>
+    <p class="text-lg">Ajanta Caves</p>
+  </header>
+
+  <!-- Scanner Section -->
+  <section class="py-8 text-center bg-yellow-50">
+    <h2 class="text-2xl font-semibold mb-2">Scan QR Code</h2>
+    <p class="mb-4">Scan a cave QR code to view its information.</p>
+    <div id="reader" class="mx-auto w-full max-w-md"></div>
+  </section>
+
+  <!-- Dynamic Content Display -->
+  <section class="py-10 px-4 bg-white">
+    <div id="cave-info" class="max-w-4xl mx-auto text-center hidden">
+      <h3 id="cave-title" class="text-xl font-bold mb-2"></h3>
+      <img id="cave-img" src="" alt="Cave Image" class="mx-auto mb-4 rounded shadow-md max-h-80" />
+      <p id="cave-desc" class="text-justify leading-relaxed"></p>
+    </div>
+
+    <div id="not-found" class="text-red-600 text-center font-medium hidden mt-4">
+      No matching cave information found.
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-yellow-800 text-white text-center py-4">
+    <p class="text-sm">© 2025 MCA Project | Ajanta Caves QR System</p>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    // Sample cave data (can be replaced with Firebase or API calls)
+    const caveData = {
+      cave1: {
+        title: "Cave 1 - Ajanta",
+        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Ajanta_Cave_1_%28cropped%29.jpg/640px-Ajanta_Cave_1_%28cropped%29.jpg",
+        description: "Cave 1 is a richly decorated Vihara (monastery) featuring intricate paintings and sculptures from the Gupta period. It includes the famous Bodhisattva Padmapani fresco."
+      },
+      cave2: {
+        title: "Cave 2 - Ajanta",
+        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Ajanta_Cave_2%2C_front_view.jpg/640px-Ajanta_Cave_2%2C_front_view.jpg",
+        description: "Cave 2 is another monastery, noted for its well-preserved wall paintings including depictions of Jataka tales, beautifully painted ceilings, and ornate doorways."
+      }
+      // Add more caves as needed
+    };
+
+    function showCaveInfo(code) {
+      const id = code.trim().toLowerCase().replace(/.*cave/, "cave");
+      const info = caveData[id];
+
+      const infoDiv = document.getElementById("cave-info");
+      const notFoundDiv = document.getElementById("not-found");
+
+      if (info) {
+        document.getElementById("cave-title").innerText = info.title;
+        document.getElementById("cave-img").src = info.img;
+        document.getElementById("cave-desc").innerText = info.description;
+
+        infoDiv.classList.remove("hidden");
+        notFoundDiv.classList.add("hidden");
+      } else {
+        infoDiv.classList.add("hidden");
+        notFoundDiv.classList.remove("hidden");
+      }
+    }
+
+    function onScanSuccess(decodedText, decodedResult) {
+  console.log("Scanned URL:", decodedText);
+  if (decodedText.startsWith("http://") || decodedText.startsWith("https://")) {
+    window.location.href = decodedText;
+  } else {
+    alert("Scanned content is not a valid URL:\n" + decodedText);
+  }
+}
+
+    function onScanFailure(error) {
+      // Optionally handle errors here
+    }
+
+    const html5QrcodeScanner = new Html5QrcodeScanner(
+      "reader",
+      { fps: 10, qrbox: 250 },
+      false
+    );
+    html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+  </script>
+</body>
+</html>
